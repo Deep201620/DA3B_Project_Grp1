@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,15 +13,15 @@ namespace DA3B_Project_Grp1.Models
     {
 
         [Display(Name = "Display Name")]
-        [StringLength(60)]
         [Required]
+        [StringLength(60)]
         [MinLength(3)]
         public string DisplayName { get; set; }
 
         [Display(Name = "Date Of Birth")]
         [PersonalData]
-        [Required]
-        [Column(TypeName = "smalldatetime")]
+        [DataType(DataType.Date)]
+        //[Column(TypeName = "smalldatetime")]
         public DateTime DateOfBirth { get; set; }
 
 

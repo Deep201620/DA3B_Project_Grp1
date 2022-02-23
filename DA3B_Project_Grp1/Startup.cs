@@ -1,6 +1,6 @@
 using DA3B_Project_Grp1.Data;
 using DA3B_Project_Grp1.Models;
-using GuniApp.Web.Services;
+using DA3B_Project_Grp1.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +27,7 @@ namespace DA3B_Project_Grp1
 
         public IConfiguration Configuration { get; }
 
-        
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -77,11 +77,8 @@ namespace DA3B_Project_Grp1
 
             services.AddRazorPages();
 
-
-            services.AddControllersWithViews();
-
             services
-                .AddSingleton<IEmailSender, MyEmailSender>();
+               .AddSingleton<IEmailSender, MyEmailSender>();
 
             services
                .AddCors(options => options.AddPolicy("MyCorsPolicy", builder =>
@@ -92,6 +89,7 @@ namespace DA3B_Project_Grp1
                }));
 
 
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,11 +116,15 @@ namespace DA3B_Project_Grp1
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                
             });
         }
     }
 }
+
+

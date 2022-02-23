@@ -2,13 +2,12 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using DA3B_Project_Grp1.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 
-namespace GuniApp.Web.Services
+namespace DA3B_Project_Grp1.Services
 {
     public class MyEmailSender
         : IEmailSender
@@ -34,7 +33,7 @@ namespace GuniApp.Web.Services
         /// <param name="subject">Subject of the Email</param>
         /// <param name="htmlMessage">HTML Text for the Email</param>
         /// <returns>Task to indicate if email was successfully sent.</returns>
-        /// <exception cref="GuniApp.Web.Services.MyEmailSenderException" />
+        /// <exception cref="DA3B_Project_Grp1.Services.MyEmailSenderException" />
         /// <example>
         /// <![CDATA[
         ///     SendEmailAsync("demo@abc.com", "hello", "<p>Hello World</p>");
