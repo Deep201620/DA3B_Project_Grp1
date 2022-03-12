@@ -13,6 +13,7 @@ namespace DA3B_Project_Grp1.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
 
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
