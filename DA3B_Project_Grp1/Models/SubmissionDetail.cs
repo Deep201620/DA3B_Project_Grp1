@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,13 +12,14 @@ namespace DA3B_Project_Grp1.Models
     public class SubmissionDetails
     {
         [Display(Name = "User ID")]
-        [Key]
+        //[Key]
         [ForeignKey(nameof(SubmissionDetails.User))]
         public Guid UserId { get; set; }
 
         public MyIdentityUser User { get; set; }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Submission Id")]
         public int SubmissionId { get; set; }
 
@@ -29,12 +31,13 @@ namespace DA3B_Project_Grp1.Models
 
 
         [Display(Name = "Submission Date")]
-        [DisplayFormat(DataFormatString = "dd-mm-yyyy")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "dd-mm-yyyy hh:mm:ss")]
         public DateTime SubmissionDate { get; set; }
 
         [Display(Name = "Submission File")]
         [Required]
-        public string SubmissionFile { get; set; }
+        public IFormFile SubmissionFile { get; set; }
 
         [Display(Name = "Approval Status")]
         [Required]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,12 @@ namespace DA3B_Project_Grp1.Models
         [MinLength(2, ErrorMessage = "{0} should have at least {1} characters.")]
         [StringLength(60, ErrorMessage = "{0} should not contain more than {1} characters.")]
         public string ParentName { get; set; }
+
+        [Display(Name = "Date Of Birth")]
+        [PersonalData]
+        [DataType(DataType.Date)]
+        //[Column(TypeName = "smalldatetime")]
+        public DateTime DateOfBirth { get; set; }
 
 
         #region Navigational Properties to the MyIdentityUser model (1:1 mapping)

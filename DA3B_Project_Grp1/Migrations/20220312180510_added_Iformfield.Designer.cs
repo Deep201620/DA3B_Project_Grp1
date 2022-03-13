@@ -4,14 +4,16 @@ using DA3B_Project_Grp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DA3B_Project_Grp1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220312180510_added_Iformfield")]
+    partial class added_Iformfield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,37 +142,6 @@ namespace DA3B_Project_Grp1.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("DA3B_Project_Grp1.Models.Project", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProjectDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Project");
-                });
-
             modelBuilder.Entity("DA3B_Project_Grp1.Models.Student", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -295,17 +266,6 @@ namespace DA3B_Project_Grp1.Migrations
                 });
 
             modelBuilder.Entity("DA3B_Project_Grp1.Models.Faculty", b =>
-                {
-                    b.HasOne("DA3B_Project_Grp1.Models.MyIdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DA3B_Project_Grp1.Models.Project", b =>
                 {
                     b.HasOne("DA3B_Project_Grp1.Models.MyIdentityUser", "User")
                         .WithMany()

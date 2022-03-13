@@ -58,13 +58,6 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             [MinLength(3)]
             public string DisplayName { get; set; }
 
-            [Display(Name = "Date Of Birth")]
-            [PersonalData]
-            //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-            //[Column(TypeName = "smalldatetime")]
-            [DataType(DataType.Date)]
-            public DateTime DateOfBirth { get; set; }
-
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -75,6 +68,15 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Display(Name = "Gender")]
+            [Required]
+            [PersonalData]
+            public string Gender { get; set; }
+
+            [Display(Name = "Phone")]
+            [Required]
+            [DataType(DataType.PhoneNumber, ErrorMessage = "{0} must contain 10 digits")]
+            public long Phone { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -93,7 +95,9 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
                     UserName = Input.Email 
                     ,Email = Input.Email
                    ,DisplayName = Input.DisplayName
-                   ,DateOfBirth = Input.DateOfBirth
+                   ,Gender = Input.Gender
+                   ,Phone = Input.Phone
+                   
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

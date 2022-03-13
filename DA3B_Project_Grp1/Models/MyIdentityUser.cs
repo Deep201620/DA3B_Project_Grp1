@@ -18,11 +18,21 @@ namespace DA3B_Project_Grp1.Models
         [MinLength(3)]
         public string DisplayName { get; set; }
 
-        [Display(Name = "Date Of Birth")]
+        [Display(Name = "Gender")]
+        [Required]
         [PersonalData]
-        [DataType(DataType.Date)]
-        //[Column(TypeName = "smalldatetime")]
-        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
+
+        [Display(Name = "Phone")]
+        [Required]
+        [DataType(DataType.PhoneNumber,ErrorMessage = "{0} must contain 10 digits")]
+        public long Phone { get; set; }
+
+        //[Display(Name = "Date Of Birth")]
+        //[PersonalData]
+        //[DataType(DataType.Date)]
+        ////[Column(TypeName = "smalldatetime")]
+        //public DateTime DateOfBirth { get; set; }
 
 
     }
