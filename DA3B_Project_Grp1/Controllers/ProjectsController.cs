@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using DA3B_Project_Grp1.Data;
 using DA3B_Project_Grp1.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DA3B_Project_Grp1.Controllers
 {
+    [Authorize(Roles = "Student")]
+
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;

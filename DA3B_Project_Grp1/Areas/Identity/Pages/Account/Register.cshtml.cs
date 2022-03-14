@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
 {
@@ -73,6 +74,7 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             [PersonalData]
             public string Gender { get; set; }
 
+         
             [Display(Name = "Phone")]
             [Required]
             [DataType(DataType.PhoneNumber, ErrorMessage = "{0} must contain 10 digits")]
@@ -82,6 +84,7 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -97,7 +100,7 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
                    ,DisplayName = Input.DisplayName
                    ,Gender = Input.Gender
                    ,Phone = Input.Phone
-                   
+                  
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

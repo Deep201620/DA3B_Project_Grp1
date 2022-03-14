@@ -34,6 +34,6 @@ namespace DA3B_Project_Grp1.Models
         ////[Column(TypeName = "smalldatetime")]
         //public DateTime DateOfBirth { get; set; }
 
-
+       
     }
 }

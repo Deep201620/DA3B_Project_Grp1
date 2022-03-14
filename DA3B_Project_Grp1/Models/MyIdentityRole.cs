@@ -8,7 +8,7 @@ namespace DA3B_Project_Grp1.Models
 {
     public class MyIdentityRole : IdentityRole<Guid>
     {
-
+        
 
     }
 }
