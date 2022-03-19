@@ -24,10 +24,10 @@
         else if (User.IsInRole("Student"))
         {
             <li class="nav-item">
-                <a class="nav-link text-light" asp-controller="Projects" asp-action="Index" asp-route-Id=@User.Identity.Name>Show Projects</a>
+                <a class="nav-link text-light" asp-controller="Projects" asp-action="Index" asp-route-Id=@User.Identity.Name>Add/Show Projects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" asp-controller="SubmissionDetails" asp-action="Index" asp-route-Id=@User.Identity.Name>Show Projects</a>
+                <a class="nav-link text-light" asp-controller="SubmissionDetails" asp-action="Index" asp-route-Id=@User.Identity.Name>Add/Show Submission</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

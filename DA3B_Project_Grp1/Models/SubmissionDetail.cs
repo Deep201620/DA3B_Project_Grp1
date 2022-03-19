@@ -11,6 +11,7 @@ namespace DA3B_Project_Grp1.Models
     [Table("SubmissionDetails")]
     public class SubmissionDetails
     {
+
         [Display(Name = "User ID")]
         //[Key]
         [ForeignKey(nameof(SubmissionDetails.User))]
@@ -32,8 +33,7 @@ namespace DA3B_Project_Grp1.Models
 
         [Display(Name = "Submission Date")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "dd-mm-yyyy hh:mm:ss")]
-        public DateTime SubmissionDate { get; set; }
+        public DateTime SubmissionDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Submission File")]
         [Required]

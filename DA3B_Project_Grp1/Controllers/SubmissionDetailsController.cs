@@ -7,23 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DA3B_Project_Grp1.Data;
 using DA3B_Project_Grp1.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace DA3B_Project_Grp1.Controllers
 {
     public class SubmissionDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly UserManager<MyIdentityUser> _userManager;
 
-        public SubmissionDetailsController(ApplicationDbContext context)
+        public SubmissionDetailsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, UserManager<MyIdentityUser> userManager)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
         // GET: SubmissionDetails
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Submissions.Include(s => s.User).Include(s => s.project);
-            return View(await applicationDbContext.ToListAsync());
+            var userid = _userManager.GetUserId(HttpContext.User);
+
+            var applicationDbContext = _context.Submissions.Where(s => s.UserId.ToString() == userid).ToListAsync();
+            return View(await applicationDbContext);
         }
 
         // GET: SubmissionDetails/Details/5
@@ -59,10 +68,19 @@ namespace DA3B_Project_Grp1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,SubmissionId,ProjectId,SubmissionDate,SubmittedFileName,ApprovalStatus,ReviewedBy,Remarks")] SubmissionDetails submissionDetails)
+        public async Task<IActionResult> Create([Bind("UserId,SubmissionId,ProjectId,SubmissionDate,SubmittedFileName,SubmissionFile,ApprovalStatus,ReviewedBy,Remarks")] SubmissionDetails submissionDetails)
         {
             if (ModelState.IsValid)
             {
+                string wwwroootpath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(submissionDetails.SubmissionFile.FileName);
+                string fileExtension = Path.GetExtension(submissionDetails.SubmissionFile.FileName);
+                submissionDetails.SubmittedFileName = fileName = fileName + DateTime.Now.ToString("yymmss") + fileExtension;   
+                string path = Path.Combine(wwwroootpath + "/SubmissionDocuments/", fileName);
+                using(var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await submissionDetails.SubmissionFile.CopyToAsync(fileStream);
+                }
                 _context.Add(submissionDetails);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
