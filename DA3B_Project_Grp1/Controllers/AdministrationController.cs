@@ -195,7 +195,7 @@ namespace DA3B_Project_Grp1.Controllers
                 }
             }
 
-            //if model parameter is emoty it means we do not have any userrole objects
+            //if model parameter is empty it means we do not have any userrole objects
             return RedirectToAction("EditRole", new { Id = role.Id });
         }
 

@@ -7,44 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DA3B_Project_Grp1.Data;
 using DA3B_Project_Grp1.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace DA3B_Project_Grp1.Controllers
 {
-    [Authorize(Roles = "Student")]
-
-    public class ProjectsController : Controller
+    public class Projects1Controller : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly UserManager<MyIdentityUser> _userManager;
-        private readonly SignInManager<MyIdentityUser> _signInManager;
-
-
-        public ProjectsController(ApplicationDbContext context, UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager)
+        public Projects1Controller(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: Projects
+        // GET: Projects1
         public async Task<IActionResult> Index()
         {
-            //var userid = _userManager.GetUserId(HttpContext.User);
-
-            var model = await _context.Projects
-                            .Where(a => a.User.Id.ToString() == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                            .ToListAsync();
-            return View(model);
-
-            //var applicationDbContext = _context.Projects.Include(p => p.User);
-            //return View(await applicationDbContext.ToListAsync());
-
+            var applicationDbContext = _context.Projects.Include(p => p.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Projects/Details/5
+        // GET: Projects1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,7 +34,7 @@ namespace DA3B_Project_Grp1.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project
+            var project = await _context.Projects
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
@@ -63,19 +45,14 @@ namespace DA3B_Project_Grp1.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
+        // GET: Projects1/Create
         public IActionResult Create()
         {
-            //Getting username by userId
-            var userid = _userManager.GetUserId(HttpContext.User);
-            //var name = _userManager.Users.FirstOrDefault(u => u.Id.ToString() == userid);
-            //ViewBag.UserId = userid;
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
-            //ViewData["UserId"] = userid;
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Projects1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -88,13 +65,11 @@ namespace DA3B_Project_Grp1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            var userid = _userManager.GetUserId(HttpContext.User);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", project.UserId);
-            //ViewData["UserId"] = userid;
             return View(project);
         }
 
-        // GET: Projects/Edit/5
+        // GET: Projects1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,17 +77,16 @@ namespace DA3B_Project_Grp1.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project.FindAsync(id);
+            var project = await _context.Projects.FindAsync(id);
             if (project == null)
             {
                 return NotFound();
             }
-            
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", project.UserId);
             return View(project);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Projects1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -148,7 +122,7 @@ namespace DA3B_Project_Grp1.Controllers
             return View(project);
         }
 
-        // GET: Projects/Delete/5
+        // GET: Projects1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -156,7 +130,7 @@ namespace DA3B_Project_Grp1.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project
+            var project = await _context.Projects
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
@@ -167,28 +141,20 @@ namespace DA3B_Project_Grp1.Controllers
             return View(project);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Projects1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var project = await _context.Project.FindAsync(id);
-            _context.Project.Remove(project);
+            var project = await _context.Projects.FindAsync(id);
+            _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProjectExists(int id)
         {
-            return _context.Project.Any(e => e.ProjectId == id);
+            return _context.Projects.Any(e => e.ProjectId == id);
         }
-
-        [HttpGet]
-        public async Task<string> GetCurrentUserId()
-        {
-            MyIdentityUser usr = await GetCurrentUserAsync();
-            return usr?.Id.ToString();
-        }
-        private Task<MyIdentityUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }

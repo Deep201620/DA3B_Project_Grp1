@@ -23,7 +23,7 @@ namespace DA3B_Project_Grp1.Models
 
 
         [Display(Name = "Project Title")]
-        [Required(ErrorMessage = "Project Ttile cannot be empty")]
+        [Required(ErrorMessage = "Project Title cannot be empty")]
         public string ProjectTitle { get; set; }
 
         [Display(Name = "Project Description")]
