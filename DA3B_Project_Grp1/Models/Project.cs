@@ -10,6 +10,7 @@ namespace DA3B_Project_Grp1.Models
     [Table("Project")]
     public class Project
     {
+
         [Display(Name = "User ID")]
         [ForeignKey(nameof(Project.User))]
         public Guid UserId { get; set; }

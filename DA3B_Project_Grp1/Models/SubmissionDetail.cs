@@ -37,10 +37,14 @@ namespace DA3B_Project_Grp1.Models
 
         [Display(Name = "Submission File")]
         [Required]
+        [NotMapped]
         public IFormFile SubmissionFile { get; set; }
 
+        [Display(Name = "FileName")]
+        public string SubmittedFileName { get; set; }
+
         [Display(Name = "Approval Status")]
-        [Required]
+        //[Required]
         public bool ApprovalStatus { get; set; }
 
         [Display(Name = "Reviewed By")]

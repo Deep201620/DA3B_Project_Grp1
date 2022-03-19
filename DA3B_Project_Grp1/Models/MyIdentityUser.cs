@@ -23,17 +23,13 @@ namespace DA3B_Project_Grp1.Models
         [PersonalData]
         public string Gender { get; set; }
 
-        [Display(Name = "Phone")]
+
+        [Display(Name = "Date of Birth")]
         [Required]
-        [DataType(DataType.PhoneNumber,ErrorMessage = "{0} must contain 10 digits")]
-        public long Phone { get; set; }
+        [PersonalData]                                      // for GDPR Complaince
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
 
-        //[Display(Name = "Date Of Birth")]
-        //[PersonalData]
-        //[DataType(DataType.Date)]
-        ////[Column(TypeName = "smalldatetime")]
-        //public DateTime DateOfBirth { get; set; }
-
-       
     }
 }
+

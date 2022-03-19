@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 @*<input type="text" asp-for="UserId" class="form-control" value="ViewBag.UserId" disabled />*@
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId" disabled></select>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="ProjectId" />

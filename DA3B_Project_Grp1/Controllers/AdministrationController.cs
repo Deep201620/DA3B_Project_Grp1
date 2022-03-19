@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace DA3B_Project_Grp1.Controllers
 {
-    [Authorize( Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<MyIdentityRole> _roleManager;
+
+        //UserManager class is used to manage users e.g. registering new users,
+        //validating credentials and loading user information
 
         public UserManager<MyIdentityUser> _UserManager { get; }
 

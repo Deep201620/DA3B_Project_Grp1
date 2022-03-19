@@ -19,9 +19,10 @@ namespace DA3B_Project_Grp1.Controllers
         private readonly ApplicationDbContext _context;
 
         private readonly UserManager<MyIdentityUser> _userManager;
+        private readonly SignInManager<MyIdentityUser> _signInManager;
 
 
-        public ProjectsController(ApplicationDbContext context, UserManager<MyIdentityUser> userManager)
+        public ProjectsController(ApplicationDbContext context, UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
@@ -30,8 +31,10 @@ namespace DA3B_Project_Grp1.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Project.Include(p => p.User);
-            return View(await applicationDbContext.ToListAsync());
+            var userid = _userManager.GetUserId(HttpContext.User);
+            var applicationDbContext = _context.Project.Where(p => p.UserId.ToString() == userid).ToListAsync();
+
+            return View(await applicationDbContext);
         }
 
         // GET: Projects/Details/5
@@ -56,7 +59,12 @@ namespace DA3B_Project_Grp1.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
+            //Getting username by userId
+            var userid = _userManager.GetUserId(HttpContext.User);
+            //var name = _userManager.Users.FirstOrDefault(u => u.Id.ToString() == userid);
+            //ViewBag.UserId = userid;
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
+            //ViewData["UserId"] = userid;
             return View();
         }
 
@@ -73,7 +81,9 @@ namespace DA3B_Project_Grp1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var userid = _userManager.GetUserId(HttpContext.User);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", project.UserId);
+            //ViewData["UserId"] = userid;
             return View(project);
         }
 

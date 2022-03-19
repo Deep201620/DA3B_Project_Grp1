@@ -45,6 +45,7 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+       
 
         public class InputModel
         {
@@ -69,22 +70,30 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
             [Display(Name = "Gender")]
-            [Required]
-            [PersonalData]
+            //[Required]
+            //[PersonalData]
             public string Gender { get; set; }
 
-         
-            [Display(Name = "Phone")]
+
+            [Display(Name = "Date of Birth")]
             [Required]
-            [DataType(DataType.PhoneNumber, ErrorMessage = "{0} must contain 10 digits")]
-            public long Phone { get; set; }
+            [PersonalData]                                      // for GDPR Complaince
+            [DataType(DataType.Date)]
+            public DateTime DateOfBirth { get; set; }
+
+            [Display(Name = "PhoneNumber")]
+            [Required]
+            [PersonalData]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+         
             ReturnUrl = returnUrl;
-            
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -95,12 +104,13 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new MyIdentityUser { 
+                    //AspNetUser table field = InputModel fields
                     UserName = Input.Email 
                     ,Email = Input.Email
                    ,DisplayName = Input.DisplayName
                    ,Gender = Input.Gender
-                   ,Phone = Input.Phone
-                  
+                   ,DateOfBirth = Input.DateOfBirth
+                   ,PhoneNumber = Input.PhoneNumber
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
