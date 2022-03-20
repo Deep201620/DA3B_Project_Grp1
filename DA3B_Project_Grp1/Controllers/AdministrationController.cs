@@ -15,6 +15,7 @@ namespace DA3B_Project_Grp1.Controllers
     {
         private readonly RoleManager<MyIdentityRole> _roleManager;
 
+
         //UserManager class is used to manage users e.g. registering new users,
         //validating credentials and loading user information
 
@@ -39,6 +40,8 @@ namespace DA3B_Project_Grp1.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model) 
         {
+            
+
             if (ModelState.IsValid)
             {
                 MyIdentityRole identityRole = new MyIdentityRole
@@ -134,7 +137,7 @@ namespace DA3B_Project_Grp1.Controllers
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
                 return View("NotFound");
             }
-            var adminrole = await _roleManager.GetRoleNameAsync(role);
+            
           
             var model = new List<UserRoleViewModel>();
 

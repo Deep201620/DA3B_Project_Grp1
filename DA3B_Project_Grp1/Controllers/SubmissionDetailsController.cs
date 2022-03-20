@@ -95,8 +95,8 @@ namespace DA3B_Project_Grp1.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", submissionDetails.UserId);
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", submissionDetails.UserId);
+            //ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
             return View(submissionDetails);
         }
 
