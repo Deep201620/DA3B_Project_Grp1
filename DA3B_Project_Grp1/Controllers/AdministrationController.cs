@@ -134,6 +134,8 @@ namespace DA3B_Project_Grp1.Controllers
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
                 return View("NotFound");
             }
+            var adminrole = await _roleManager.GetRoleNameAsync(role);
+          
             var model = new List<UserRoleViewModel>();
 
             foreach(var user in _UserManager.Users)
