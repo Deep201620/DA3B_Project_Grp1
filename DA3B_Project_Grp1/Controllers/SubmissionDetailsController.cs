@@ -35,7 +35,6 @@ namespace DA3B_Project_Grp1.Controllers
             //var applicationDbContext = _context.Submissions.Where<s => s.>
             var applicationDbContext = _context.Submissions.Include(s => s.User).Include(s => s.project).Where(s => s.UserId.ToString() == userid);
 
-
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -67,7 +66,7 @@ namespace DA3B_Project_Grp1.Controllers
             ViewBag.UserId = new SelectList(_context.Users, "Id", "DisplayName");
 
 
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription");
+            ViewData["ProjectId"] = new SelectList(_context.Project, "ProjectId", "ProjectDescription");
             return View();
         }
 
@@ -114,7 +113,7 @@ namespace DA3B_Project_Grp1.Controllers
                 return NotFound();
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", submissionDetails.UserId);
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
             return View(submissionDetails);
         }
 
@@ -151,7 +150,7 @@ namespace DA3B_Project_Grp1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", submissionDetails.UserId);
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
             return View(submissionDetails);
         }
 

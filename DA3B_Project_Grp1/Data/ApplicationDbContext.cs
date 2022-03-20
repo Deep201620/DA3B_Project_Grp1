@@ -13,7 +13,7 @@ namespace DA3B_Project_Grp1.Data
     { 
         public DbSet<Student> Students { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<Project> Project { get; set; }
         public DbSet<SubmissionDetails> Submissions { get; set; }
 
 
@@ -23,6 +23,6 @@ namespace DA3B_Project_Grp1.Data
         }
 
 
-        public DbSet<DA3B_Project_Grp1.Models.Project> Project { get; set; }
+        
     }
 }

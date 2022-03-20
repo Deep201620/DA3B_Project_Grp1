@@ -3,13 +3,12 @@
 @inject UserManager<MyIdentityUser> UserManager
 @using DA3B_Project_Grp1.Models
 
-
-
 <ul class="navbar-nav ">
     @if (SignInManager.IsSignedIn(User))
     {
         @if (@User.IsInRole("Admin"))
         {
+            
             <li class="nav-item">
                 <a class="nav-link text-light" asp-controller="Administration" asp-action="listroles" title="Manage">List Roles</a>
             </li>
@@ -17,14 +16,8 @@
                 <a class="nav-link text-light" asp-controller="Administration" asp-action="CreateRole" title="Manage">Add Role
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" asp-controller="Administration" asp-action="EditRole" title="Manage">Edit Role
-                </a>
-            </li>
-             <li class="nav-item">
-                <a class="nav-link text-light" asp-controller="Administration" asp-action="EditUsersInRole" title="Manage">Add Users
-                </a>
-            </li>
+          
+           
             <li class="nav-item">
                 <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Manage Profile</a>
             </li>
