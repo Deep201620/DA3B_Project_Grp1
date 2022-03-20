@@ -31,11 +31,11 @@ namespace DA3B_Project_Grp1.Controllers
         public async Task<IActionResult> Index()
         {
             var userid = _userManager.GetUserId(HttpContext.User);
-            //var model = await _context.Submissions
-            //                .Where(a => a.User.Id.ToString() == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
-            //                .ToListAsync();
-            var applicationDbContext = _context.Submissions.Where(s => s.UserId.ToString() == userid);
-            //var applicationDbContext = _context.Submissions.Include(s => s.User).Include(s => s.project);
+
+            //var applicationDbContext = _context.Submissions.Where<s => s.>
+            var applicationDbContext = _context.Submissions.Include(s => s.User).Include(s => s.project).Where(s => s.UserId.ToString() == userid);
+
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -63,7 +63,9 @@ namespace DA3B_Project_Grp1.Controllers
         public IActionResult Create()
         {
             var Id = _userManager.GetUserId(HttpContext.User);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
+            //ViewBag.UserId = Id;
+            ViewBag.UserId = new SelectList(_context.Users, "Id", "DisplayName");
+
 
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription");
             return View();
@@ -76,6 +78,7 @@ namespace DA3B_Project_Grp1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,SubmissionId,ProjectId,SubmissionDate,SubmittedFileName,SubmissionFile,ApprovalStatus,ReviewedBy,Remarks")] SubmissionDetails submissionDetails)
         {
+            var userid = _userManager.GetUserId(HttpContext.User); ;
             if (ModelState.IsValid)
             {
                 string wwwroootpath = _hostEnvironment.WebRootPath;
@@ -91,6 +94,7 @@ namespace DA3B_Project_Grp1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", submissionDetails.UserId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectDescription", submissionDetails.ProjectId);
             return View(submissionDetails);

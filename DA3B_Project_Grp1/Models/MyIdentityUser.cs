@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using DA3B_Project_Grp1.Models.Enum;
 
 namespace DA3B_Project_Grp1.Models
 {
@@ -21,7 +22,7 @@ namespace DA3B_Project_Grp1.Models
         [Display(Name = "Gender")]
         [Required]
         [PersonalData]
-        public string Gender { get; set; }
+        public MyIdentityGenders Gender { get; set; }
 
 
         [Display(Name = "Date of Birth")]

@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DA3B_Project_Grp1.Models.Enum;
 
 namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
 {
@@ -74,7 +75,7 @@ namespace DA3B_Project_Grp1.Areas.Identity.Pages.Account
             [Display(Name = "Gender")]
             //[Required]
             //[PersonalData]
-            public string Gender { get; set; }
+            public MyIdentityGenders Gender { get; set; }
 
 
             [Display(Name = "Date of Birth")]

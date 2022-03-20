@@ -20,7 +20,7 @@ namespace DA3B_Project_Grp1.Controllers
         private readonly ApplicationDbContext _context;
 
         private readonly UserManager<MyIdentityUser> _userManager;
-        private readonly SignInManager<MyIdentityUser> _signInManager;
+       
 
 
         public ProjectsController(ApplicationDbContext context, UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager)
@@ -32,15 +32,16 @@ namespace DA3B_Project_Grp1.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            //var userid = _userManager.GetUserId(HttpContext.User);
+            var userid = _userManager.GetUserId(HttpContext.User);
+            var applicationDbContext = _context.Project.Include(p => p.User).Where(s => s.UserId.ToString() == userid);
 
-            var model = await _context.Projects
-                            .Where(a => a.User.Id.ToString() == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                            .ToListAsync();
-            return View(model);
+            //var model = await _context.Projects
+            //                .Where(a => a.User.Id.ToString() == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            //                .ToListAsync();
+            //return View(model);
 
             //var applicationDbContext = _context.Projects.Include(p => p.User);
-            //return View(await applicationDbContext.ToListAsync());
+            return View(await applicationDbContext.ToListAsync());
 
         }
 
@@ -69,8 +70,8 @@ namespace DA3B_Project_Grp1.Controllers
             //Getting username by userId
             var userid = _userManager.GetUserId(HttpContext.User);
             //var name = _userManager.Users.FirstOrDefault(u => u.Id.ToString() == userid);
-            //ViewBag.UserId = userid;
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
+            ViewBag.UserId = userid;
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName");
             //ViewData["UserId"] = userid;
             return View();
         }
@@ -89,7 +90,7 @@ namespace DA3B_Project_Grp1.Controllers
                 return RedirectToAction(nameof(Index));
             }
             var userid = _userManager.GetUserId(HttpContext.User);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", project.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "DisplayName", project.UserId);
             //ViewData["UserId"] = userid;
             return View(project);
         }
